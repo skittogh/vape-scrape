@@ -1,0 +1,53 @@
+name: Run R Script for Web Scraping
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scrape-data:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up R environment
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+
+    # Step 3: Install required R packages
+    - name: Install dependencies
+      uses: r-lib/actions/setup-r-dependencies@v2
+      with:
+        packages: |
+          any::tidyverse
+          any::chromote
+          any::rvest
+          any::xml2
+          any::purrr
+          any::fs
+          any::polite
+          any::readr
+
+    # Step 4: Create a directory and set up the folder for saving data (optional)
+    - name: Set up data folder
+      run: |
+        timestamp=$(date +%Y-%m-%d\ %H-%M-%S)
+        mkdir -p vape-scrape/data/$timestamp
+
+    # Step 5: Run the R script to scrape data
+    - name: Run web scraping R script
+      run: |
+        Rscript -e 'source("path/to/your_script.R")'
+
+    # Step 6: Optionally, commit and push results to the repository (if you want to save scraped data back to GitHub)
+    - name: Commit and push data (if applicable)
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        git add vape-scrape/data/*
+        git commit -m "Add scraped data" || echo "No changes to commit"
+        git push origin main || echo "No changes to commit"
