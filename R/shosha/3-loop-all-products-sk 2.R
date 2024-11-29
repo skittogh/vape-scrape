@@ -16,7 +16,9 @@ library(polite)
 
 
 # Generate a unique folder name based on the current date and time
-timestamp <- format(Sys.time(), "%Y-%m-%d %H-%M-%S")  
+# timestamp <- format(Sys.time(), "%Y-%m-%d %H-%M-%S")  
+# timestamp <- format(Sys.time(), "%Y-%m-%d")  
+timestamp <- "test"  
 folder_path <- fs::path("data", timestamp)
 fs::dir_create(folder_path) #create dir to save data into
 
