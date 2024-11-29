@@ -32,23 +32,16 @@ jobs:
           any::polite
           any::readr
 
-    # Step 4: Create a directory and set up the folder for saving data (optional)
-    - name: Set up data folder
-      run: |
-        timestamp=$(date +%Y-%m-%d\ %H-%M-%S)
-        mkdir -p vape-scrape/data/$timestamp
-
-    # Step 5: Run the R script to scrape data
+    # Step 4: Run the R script to scrape data
     - name: Run web scraping R script
       run: |
         Rscript -e 'source("R/shosha/3-loop-all-products-sk 2.R")'
 
-    # Step 6: Optionally, commit and push results to the repository (if you want to save scraped data back to GitHub)
+    # Step 5: Optionally, commit and push results to the repository (if you want to save scraped data back to GitHub)
     - name: Commit and push data (if applicable)
       run: |
-        timestamp=$(date +%Y-%m-%d\ %H-%M-%S)
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Actions"
-        git add vape-scrape/data/$timestamp*
+        git add vape-scrape/data/*
         git commit -m "Add scraped data" || echo "No changes to commit"
         git push origin main || echo "No changes to commit"
