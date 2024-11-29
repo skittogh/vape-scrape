@@ -51,7 +51,7 @@ wait_for_elements <- function(url_html_live, selector, timeout = 3, sleep = 2) {
     
     # If the elements are found or the timeout is reached, return the result
     if (length(elements) > 0 || as.numeric(difftime(Sys.time(), start_time, units = "secs")) > timeout) {
-      return(elements)
+      return(elements) #return breaks the loop
     }
     
     # Otherwise, wait and we will have another crack
@@ -108,7 +108,7 @@ get_html_with_retry <- function(url, retries = 3, delay = 5) {
     if (attempt < retries) {
       message(paste("Attempt", attempt, "failed. Retrying in", delay, "seconds..."))
       Sys.sleep(delay)  # Delay before having another go
-      attempt <- attempt + 1
+      attempt <- attempt + 1 #iterate attempt number
     } else {
       stop(paste("All", retries, "retries failed for URL:", url))
     }
@@ -128,7 +128,7 @@ get_html_with_retry <- function(url, retries = 3, delay = 5) {
       # print(paste("Loop number:", i + last_saved_row)) # Adjust loop number based on last saved row - ie if it restarted after error it would be using a last_saved_row > 0
       print(paste("Loop number:", i)) # Adjust loop number based on last saved row - ie if it restarted after error it would be using a last_saved_row > 0
       
-      # Clean up any previous connections
+      # Clean up any previous connections - this step may not be needed but it seems a clean way to do it
       if (exists("url_html_live")) {
         tryCatch({
           url_html_live$session$close()  # Close the chromote session
@@ -139,7 +139,7 @@ get_html_with_retry <- function(url, retries = 3, delay = 5) {
         rm(url_html_live)
       }
       
-      # Remove previous objects - prob not neded
+      # Remove previous objects - prob not needed but again, it seems a clean way to do it
       if (exists("name")) {rm(name)}
       if (exists("category")) {rm(category)}
       if (exists("details")) {rm(details)}
