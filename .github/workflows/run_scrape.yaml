@@ -41,7 +41,7 @@ jobs:
     # Step 5: Run the R script to scrape data
     - name: Run web scraping R script
       run: |
-        Rscript -e 'source("R/shosha/3-loop-all-products-sk2.R")'
+        Rscript -e 'source("R/shosha/3-loop-all-products-sk 2.R")'
 
     # Step 6: Optionally, commit and push results to the repository (if you want to save scraped data back to GitHub)
     - name: Commit and push data (if applicable)
