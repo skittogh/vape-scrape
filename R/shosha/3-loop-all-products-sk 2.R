@@ -30,9 +30,9 @@ urls <- readr::read_csv(file = urls_path)
 #get urls to loop through 
 urls <- urls |> 
   pull() |> 
-  # magrittr::extract(1:nrow(urls)) #loop all
+  magrittr::extract(1:nrow(urls)) #loop all
   # magrittr::extract(450:nrow(urls)) #test on x urls, products begin at 450, but should add some logic to subset only product url's
-magrittr::extract(450:455)
+# magrittr::extract(450:455)
 
 
 
